@@ -35,11 +35,11 @@
         let gamma = event.gamma; // -90 .. +90 között
 
         if (keszenAll) {
-          if (gamma < 60) {  // jobbra dől (pl. előre)
+          if (gamma < 60 && gamma > 0) {  // jobbra dől (pl. előre)
             szam++;
             document.getElementById("szam").textContent = szam;
             keszenAll = false; // várjuk vissza a középállást
-          } else if (gamma > -60) { // balra dől (pl. hátra)
+          } else if (gamma > -60 && gamma < 0) { // balra dől (pl. hátra)
             szam--;
             document.getElementById("szam").textContent = szam;
             keszenAll = false;
@@ -47,7 +47,7 @@
         }
 
         // ha visszatért középre (kb. egyenesben van), újra engedélyezünk számlálást
-        if (gamma > 80 && gamma < -80) {
+        if (gamma > 80 || gamma < -80) {
           keszenAll = true;
         }
       });
