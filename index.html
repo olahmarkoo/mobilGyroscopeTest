@@ -2,54 +2,31 @@
 <html lang="hu">
 <head>
   <meta charset="UTF-8">
-  <title>Döntés számláló</title>
+  <title>DeviceOrientation teszt</title>
   <style>
     body {
       font-family: sans-serif;
       text-align: center;
       margin-top: 50px;
     }
-    #szam {
-      font-size: 60px;
-      font-weight: bold;
+    .ertek {
+      font-size: 30px;
+      margin: 10px 0;
     }
   </style>
 </head>
 <body>
-  <h1>Döntsd a telefont!</h1>
-  <div id="szam">0</div>
+  <h1>DeviceOrientation teszt</h1>
+  <div class="ertek">Alpha: <span id="alpha">0</span>°</div>
+  <div class="ertek">Beta: <span id="beta">0</span>°</div>
+  <div class="ertek">Gamma: <span id="gamma">0</span>°</div>
 
   <script>
-    let szam = 0;
-    let gameOn = true;
-    let referencia = null;  // induló állás (0 fok)
-
     if (window.DeviceOrientationEvent) {
       window.addEventListener("deviceorientation", (event) => {
-        let beta = event.beta; // -180 és 180 között
-
-        referencia = 0;
-
-        // relatív dőlés a kezdőállapothoz képest
-        let elteres = referencia - beta;
-
-        if (gameOn) {
-          if (elteres > 45) { 
-            gameOn = false;
-            if (10 > elteres > -10) {
-              szam++;
-              document.getElementById("szam").textContent = szam;
-              gameOn = true;
-            }
-          } else if (elteres < -35) {
-            gameOn = false;
-            if (10 > elteres > -10) {
-              szam--;
-              document.getElementById("szam").textContent = szam;
-              gameOn = true;
-            }
-          }
-        }
+        document.getElementById("alpha").textContent = event.alpha.toFixed(1);
+        document.getElementById("beta").textContent = event.beta.toFixed(1);
+        document.getElementById("gamma").textContent = event.gamma.toFixed(1);
       });
     } else {
       alert("A készülék nem támogatja a giroszkópot.");
