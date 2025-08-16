@@ -21,22 +21,34 @@
 
   <script>
     let szam = 0;
-    let utolsoIrany = null; // "fel", "le", vagy null
+    let utolsoIrany = null; // "fel", "le" vagy null
+    let referencia = null;  // induló állás (0 fok)
 
     if (window.DeviceOrientationEvent) {
       window.addEventListener("deviceorientation", (event) => {
-        let beta = event.beta; 
-        // beta: -180 és 180 fok között van
-        // 0 = függőleges, + előre dől, - hátra dől
+        let beta = event.beta; // -180 és 180 között
 
-        if (beta > 60) {
+        if (referencia === null) {
+          referencia = beta; // első mérés a kiindulási pozíció
+        }
+
+        // relatív dőlés a kezdőállapothoz képest
+        let elteres = beta - referencia;
+
+        if (elteres > 60) { 
+          if (utolsoIrany !== "le") {
             szam++;
             document.getElementById("szam").textContent = szam;
-        } else if (beta < -60) { 
+            utolsoIrany = "le";
+          }
+        } else if (elteres < -60) { 
+          if (utolsoIrany !== "fel") {
             szam--;
             document.getElementById("szam").textContent = szam;
+            utolsoIrany = "fel";
+          }
         } else {
-          utolsoIrany = null; // vissza alap helyzetbe
+          utolsoIrany = null; // visszatért középállásba
         }
       });
     } else {
