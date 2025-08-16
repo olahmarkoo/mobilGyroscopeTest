@@ -29,18 +29,12 @@
         // beta: -180 és 180 fok között van
         // 0 = függőleges, + előre dől, - hátra dől
 
-        if (beta > 45) { 
-          if (utolsoIrany !== "le") {
+        if (beta > 60) {
             szam++;
             document.getElementById("szam").textContent = szam;
-            utolsoIrany = "le";
-          }
-        } else if (beta < -45) { 
-          if (utolsoIrany !== "fel") {
+        } else if (beta < -60) { 
             szam--;
             document.getElementById("szam").textContent = szam;
-            utolsoIrany = "fel";
-          }
         } else {
           utolsoIrany = null; // vissza alap helyzetbe
         }
