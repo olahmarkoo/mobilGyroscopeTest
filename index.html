@@ -35,19 +35,21 @@
         // relatív dőlés a kezdőállapothoz képest
         let elteres = beta - referencia;
 
-        if (elteres > 60) { 
+        if (elteres > 45) { 
           if (utolsoIrany !== "le") {
             szam++;
             document.getElementById("szam").textContent = szam;
             utolsoIrany = "le";
+            await sleep(2000);
           }
-        } else if (elteres < -60) { 
+        } else if (elteres < -45) { 
           if (utolsoIrany !== "fel") {
             szam--;
             document.getElementById("szam").textContent = szam;
             utolsoIrany = "fel";
+            await sleep(2000);
           }
-        } else {
+        } else if (10 > elteres > -10){
           utolsoIrany = null; // visszatért középállásba
         }
       });
