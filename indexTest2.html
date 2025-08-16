@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <title>Döntés számláló</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #szam {
+      font-size: 60px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Döntsd a telefont!</h1>
+  <div id="szam">0</div>
+
+  <script>
+    let szam = 0;
+    let utolsoIrany = null; // "fel", "le", vagy null
+
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener("deviceorientation", (event) => {
+        let beta = event.beta; 
+        // beta: -180 és 180 fok között van
+        // 0 = függőleges, + előre dől, - hátra dől
+
+        if (beta > 45) { 
+          if (utolsoIrany !== "le") {
+            szam++;
+            document.getElementById("szam").textContent = szam;
+            utolsoIrany = "le";
+          }
+        } else if (beta < -45) { 
+          if (utolsoIrany !== "fel") {
+            szam--;
+            document.getElementById("szam").textContent = szam;
+            utolsoIrany = "fel";
+          }
+        } else {
+          utolsoIrany = null; // vissza alap helyzetbe
+        }
+      });
+    } else {
+      alert("A készülék nem támogatja a giroszkópot.");
+    }
+  </script>
+</body>
+</html>
